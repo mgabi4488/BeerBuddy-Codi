@@ -4,42 +4,23 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createStore } from 'redux';
+import allReducers from './reducers';
+import { Provider } from 'react-redux';
 
-//STORE -> GLOBILZED SATE
-
-
-//ACTION INCREMENT
-const increment = () => {
-  return {
-    type: 'INCREMENT'
-  }
-}
-
-const decrement = () => {
-  return {
-    type: 'DECREMENT'
-  }
-}
-
-//REDUCER
-const counter = (state = 0, action) => {
-  switch(action.type){
-    case "INCREMENT":
-      return state + 1;
-    case "INCREMENT":
-      return state - 1;
-  }
-}
-
-let store = createStore(counter);
+let store = createStore(
+	allReducers,
+	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 //Display it in console
 store.subscribe(() => console.log(store.getState()));
 
-//DISPATCH
-store.dispatch(increment());
-
-ReactDOM.render(<App /> ,document.getElementById('root'));
+ReactDOM.render(
+	<Provider store={store}>
+		<App />
+	</Provider>,
+	document.getElementById('root')
+);
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
